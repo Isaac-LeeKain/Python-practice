@@ -1,3 +1,26 @@
+# ############## Blackjack Project #####################
+
+# Difficulty Expert 🤯: Only use Hint 1 to complete the project.
+
+# ############## Our Blackjack House Rules #####################
+
+# The deck is unlimited in size.
+# There are no jokers.
+# The Jack/Queen/King all count as 10.
+# The the Ace can count as 11 or 1.
+# Use the following list as the deck of cards:
+# cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+# The cards in the list have equal probability of being drawn.
+# Cards are not removed from the deck as they are drawn.
+# The computer is the dealer.
+
+# #################### Hints #####################
+
+# Hint 1: Go to this website and try out the Blackjack game:
+#   https://games.washingtonpost.com/games/blackjack/
+# Then try out the completed Blackjack project here:
+#   http://blackjack-final.appbrewery.repl.run
+
 import os
 import random
 import time
@@ -41,14 +64,14 @@ def check_act(player_score, dealer_score, money_dic, deal_act):
 
 # TODO Rename this here and in `check_act`
 def _extracted_from_check_act_win(money_dic, deal_act):
-    print(f"YOU WIN ${deal_act}!")
+    print(f"YOU WIN ${deal_act}\n!")
     money_dic["player"] += deal_act
     money_dic["dealer"] -= deal_act
 
 
 # TODO Rename this here and in `check_act`
 def _extracted_from_check_act_lose(money_dic, deal_act):
-    print(f"YOU LOSE ${deal_act}!")
+    print(f"YOU LOSE ${deal_act}\n!")
     money_dic["player"] -= deal_act
     money_dic["dealer"] += deal_act
 
@@ -66,8 +89,6 @@ money_dic = {
     "dealer": 1000,
 }
 deal_act = 0
-print(f"Your money: {money_dic['player']}\n")
-print(f"dealer_money: {money_dic['dealer']}\n")
 dealer_cards_amount = 0
 is_continue = False
 is_again = False
@@ -75,16 +96,18 @@ is_again = False
 while not is_again:
     # clear
     os.system("cls")
-
+    # show money
+    print(f"Your money: ${money_dic['player']}\n")
+    print(f"dealer_money: ${money_dic['dealer']}\n")
     # deal set
     deal_act = int(input("How much money do you want to deal?\n"))
-
+    # check or not
     while not is_continue:
-        # start to play
+        # start to play, choice action
         player_act = input("choice! hit, stand, double\n")
-
+        # hit
         if player_act == "hit":
-            # player hit the card
+            # player hit
             print(f"You choice {player_act}!\n")
             player_score = hit_act(all_cards,
                                    cards=player_cards,
@@ -92,32 +115,35 @@ while not is_again:
             player_print_cards = print_act(print_cards=player_print_cards,
                                            cards=player_cards)
             print(
-                f"Your print cards:{player_print_cards}\nYour cards:{player_cards}\nYour score: {player_score}\n\n"
+                f"Your cards:{player_print_cards}\nYour score: {player_score}\n\n"
             )
+            # check bust or not
             if player_score > 21:
                 break
-            # if players score more than dealer score, then dealer choice hit too
+            # dealer hit
             if dealer_score < player_score or dealer_score <= 16:
                 dealer_cards_amount += 1
                 print("Dealer also choice hit!\n")
                 dealer_score = hit_act(all_cards,
                                        cards=dealer_cards,
                                        score=dealer_cards)
+            # dealer stand
             else:
                 print("Dealer choice stand!\n")
             dealer_print_cards = print_act(print_cards=dealer_print_cards,
                                            cards=dealer_cards)
             print(
-                f"Dealer first cards:{dealer_print_cards[0]}\nDealer cards: {dealer_cards}\nDealer score: {dealer_score}\nDealer got {dealer_cards_amount} cards\n\n"
+                f"Dealer first cards:{dealer_print_cards[0]}\nDealer got {dealer_cards_amount} cards\n\n"
             )
         elif player_act == "stand":
             # player stand
             print(f"You choice {player_act}!\n")
             print(
-                f"Your print cards:{player_print_cards}\nYour cards:{player_cards}\nYour score: {player_score}\n\n"
+                f"Your cards:{player_print_cards}\nYour score: {player_score}\n\n"
             )
+            # check flag change
             is_continue = True
-            # if players score more than dealer score, then dealer choice hit too
+            # dealer: true then hit, until false
             while dealer_score < player_score or dealer_score <= 16:
                 dealer_cards_amount += 1
                 print("Dealer also choice hit!\n")
@@ -127,11 +153,11 @@ while not is_again:
                 dealer_print_cards = print_act(print_cards=dealer_print_cards,
                                                cards=dealer_cards)
                 print(
-                    f"Dealer first cards:{dealer_print_cards[0]}\nDealer cards: {dealer_cards}\nDealer score: {dealer_score}\nDealer got {dealer_cards_amount} cards\n\n"
+                    f"Dealer first cards:{dealer_print_cards[0]}\nDealer got {dealer_cards_amount} cards\n\n"
                 )
                 time.sleep(2)
         else:
-            # player double
+            # player double, then stand
             deal_act *= 2
             player_score = hit_act(all_cards,
                                    cards=player_cards,
@@ -139,11 +165,14 @@ while not is_again:
             player_print_cards = print_act(print_cards=player_print_cards,
                                            cards=player_cards)
             print(
-                f"Your print cards:{player_print_cards}\nYour cards:{player_cards}\nYour score: {player_score}\n\n"
+                f"Your cards:{player_print_cards}\nYour score: {player_score}\n\n"
             )
+            # check bust or not
             if player_score > 21:
                 break
+            # check flag change
             is_continue = True
+            # dealer: true then hit, until false
             while dealer_score < player_score or dealer_score <= 16:
                 dealer_cards_amount += 1
                 print("Dealer also choice hit!\n")
@@ -153,13 +182,15 @@ while not is_again:
                 dealer_print_cards = print_act(print_cards=dealer_print_cards,
                                                cards=dealer_cards)
                 print(
-                    f"Dealer first cards:{dealer_print_cards[0]}\nDealer cards: {dealer_cards}\nDealer score: {dealer_score}\nDealer got {dealer_cards_amount} cards\n\n"
+                    f"Dealer first cards:{dealer_print_cards[0]}\nDealer got {dealer_cards_amount} cards\n\n"
                 )
                 time.sleep(2)
-
+    # check score
     check_act(player_score, dealer_score, money_dic, deal_act)
-    print(f"Your money: {money_dic['player']}\n")
-    print(f"dealer_money: {money_dic['dealer']}\n")
+    # show money
+    print(f"Your money: ${money_dic['player']}\n")
+    print(f"dealer_money: ${money_dic['dealer']}\n")
+    # check game over and again or not
     if money_dic['player'] <= 0:
         print("Congratulations,you defeat Dealer. Thanks for playing!")
         break
