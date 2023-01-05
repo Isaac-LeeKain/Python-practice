@@ -56,23 +56,24 @@ def _extracted_from_check_act_lose(money_dic, deal_act):
 
 
 # initial variables
-player_cards = []
-dealer_cards = []
-player_print_cards = []
-dealer_print_cards = []
-player_score = 0
-dealer_score = 0
 all_cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 money_dic = {
     "player": 1000,
     "dealer": 1000,
 }
 deal_act = 0
-dealer_cards_amount = 0
-is_continue = False
 is_again = False
 
 while not is_again:
+    # initialize variables
+    is_continue = False
+    player_cards = []
+    dealer_cards = []
+    player_print_cards = []
+    dealer_print_cards = []
+    player_score = 0
+    dealer_score = 0
+    dealer_cards_amount = 0
     # clear
     os.system("cls")
     # show logo
@@ -166,16 +167,21 @@ while not is_again:
                     f"Dealer first cards:{dealer_print_cards[0]}\nDealer got {dealer_cards_amount} cards\n\n"
                 )
                 time.sleep(2)
+    # show you and dealer's cards and score
+    print("\n********RESULT********\n")
+    print(f"Your cards:{player_print_cards}\nYour score: {player_score}\n")
+    print(
+        f"Dealer cards:{dealer_print_cards}\nDealer score {dealer_score}\n\n")
     # check score
     check_act(player_score, dealer_score, money_dic, deal_act)
     # show money
     print(f"Your money: ${money_dic['player']}\n")
     print(f"dealer_money: ${money_dic['dealer']}\n")
     # check game over and again or not
-    if money_dic['player'] <= 0:
+    if money_dic['dealer'] <= 0:
         print("Congratulations,you defeat Dealer. Thanks for playing!")
         break
-    elif money_dic['dealer'] <= 0:
+    elif money_dic['player'] <= 0:
         print("You have no money, game over!")
         break
     else:
