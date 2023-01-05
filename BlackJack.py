@@ -2,6 +2,8 @@ import os
 import random
 import time
 
+from art import logo
+
 
 def hit_act(all_cards, cards, score):
     cards.append(all_cards[random.randint(0, 12)])
@@ -73,6 +75,8 @@ is_again = False
 while not is_again:
     # clear
     os.system("cls")
+    # show logo
+    print(logo)
     # show money
     print(f"Your money: ${money_dic['player']}\n")
     print(f"dealer_money: ${money_dic['dealer']}\n")
