@@ -73,7 +73,7 @@ while not is_again:
     dealer_print_cards = []
     player_score = 0
     dealer_score = 0
-    dealer_cards_amount = 0
+    dealer_cards_amount = 2
     # clear
     os.system("cls")
     # show logo
@@ -83,10 +83,27 @@ while not is_again:
     print(f"dealer_money: ${money_dic['dealer']}\n")
     # deal set
     deal_act = int(input("How much money do you want to deal?\n"))
+    # start play
+    for _ in range(2):
+        player_score = hit_act(all_cards,
+                               cards=player_cards,
+                               score=player_score)
+        player_print_cards = print_act(print_cards=player_print_cards,
+                                       cards=player_cards)
+        dealer_score = hit_act(all_cards,
+                               cards=dealer_cards,
+                               score=dealer_cards)
+        dealer_print_cards = print_act(print_cards=dealer_print_cards,
+                                       cards=dealer_cards)
+    print(f"Your cards:{player_print_cards}\nYour score: {player_score}\n\n")
+    print(
+        f"Dealer first cards:{dealer_print_cards[0]}\nDealer got {dealer_cards_amount} cards\n\n"
+    )
     # check or not
     while not is_continue:
-        # start to play, choice action
+        # player choice
         player_act = input("choice! hit, stand, double\n")
+
         # hit
         if player_act == "hit":
             # player hit
