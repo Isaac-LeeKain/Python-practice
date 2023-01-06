@@ -43,14 +43,14 @@ def check_act(player_score, dealer_score, money_dic, deal_act):
 
 # TODO Rename this here and in `check_act`
 def _extracted_from_check_act_win(money_dic, deal_act):
-    print(f"YOU WIN ${deal_act}\n!")
+    print(f"YOU WIN ${deal_act}!\n")
     money_dic["player"] += deal_act
     money_dic["dealer"] -= deal_act
 
 
 # TODO Rename this here and in `check_act`
 def _extracted_from_check_act_lose(money_dic, deal_act):
-    print(f"YOU LOSE ${deal_act}\n!")
+    print(f"YOU LOSE ${deal_act}!\n")
     money_dic["player"] -= deal_act
     money_dic["dealer"] += deal_act
 
@@ -74,6 +74,7 @@ while not is_again:
     player_score = 0
     dealer_score = 0
     dealer_cards_amount = 2
+    deal_check = False
     # clear
     os.system("cls")
     # show logo
@@ -82,7 +83,14 @@ while not is_again:
     print(f"Your money: ${money_dic['player']}\n")
     print(f"dealer_money: ${money_dic['dealer']}\n")
     # deal set
-    deal_act = int(input("How much money do you want to deal?\n"))
+    while not deal_check:
+        deal_act = int(input("How much money do you want to deal?\n"))
+        if money_dic["player"] - deal_act < 0:
+            print("You have not enough money")
+        elif money_dic["dealer"] - deal_act < 0:
+            print("Dealer have not enough money")
+        else:
+            deal_check = True
     # start play
     for _ in range(2):
         player_score = hit_act(all_cards,
@@ -156,8 +164,15 @@ while not is_again:
                 )
                 time.sleep(2)
         else:
-            # player double, then stand
+            # money check
             deal_act *= 2
+            if money_dic["player"] - deal_act < 0:
+                print("You have not enough money")
+                continue
+            elif money_dic["dealer"] - deal_act < 0:
+                print("Dealer have not enough money")
+                continue
+            # player double, then stand
             player_score = hit_act(all_cards,
                                    cards=player_cards,
                                    score=player_score)
