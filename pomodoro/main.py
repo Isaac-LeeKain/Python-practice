@@ -63,7 +63,7 @@ def time_cal():
         # Time calculation
         if timer.get() > 0:
             timer.set(timer.get() - 1)
-            _callback_id.set(root.after(100, time_cal))
+            _callback_id.set(root.after(1000, time_cal))
         # Set new time
         else:
             reps.set(reps.get() + 1)
